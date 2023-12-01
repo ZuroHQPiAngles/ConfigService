@@ -21,6 +21,7 @@ package org.piangles.backbone.services.config;
 import org.piangles.backbone.services.Locator;
 import org.piangles.backbone.services.logging.LoggingService;
 import org.piangles.core.util.central.Environment;
+import software.amazon.awssdk.services.secretsmanager.endpoints.SecretsManagerEndpointProvider;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
@@ -39,7 +40,12 @@ class AWSSecretManagerConfigSource implements ConfigSource
 		environment = new Environment(); 
 		try
 		{
-			secretsManagerClient = SecretsManagerClient.builder().region(environment.getRegion()).build();
+			
+			secretsManagerClient = SecretsManagerClient
+					.builder()
+					.endpointProvider(SecretsManagerEndpointProvider.defaultProvider())
+					.region(environment.getRegion())
+					.build();
 		}
 		catch (Exception e)
 		{
