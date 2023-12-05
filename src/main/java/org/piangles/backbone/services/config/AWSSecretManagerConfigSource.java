@@ -21,7 +21,8 @@ package org.piangles.backbone.services.config;
 import org.piangles.backbone.services.Locator;
 import org.piangles.backbone.services.logging.LoggingService;
 import org.piangles.core.util.central.Environment;
-import software.amazon.awssdk.services.secretsmanager.endpoints.SecretsManagerEndpointProvider;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
@@ -33,7 +34,7 @@ class AWSSecretManagerConfigSource implements ConfigSource
 
 	private Environment environment = null;
 	private SecretsManagerClient secretsManagerClient = null;
-	private String secretName = "-encrypt-token";
+	private String secretName = "_encrypt-token";
 	
 	AWSSecretManagerConfigSource() throws Exception
 	{
@@ -43,8 +44,8 @@ class AWSSecretManagerConfigSource implements ConfigSource
 			
 			secretsManagerClient = SecretsManagerClient
 					.builder()
-					.endpointProvider(SecretsManagerEndpointProvider.defaultProvider())
-					.region(environment.getRegion())
+					.region(Region.US_EAST_2)
+					.credentialsProvider(ProfileCredentialsProvider.create())
 					.build();
 		}
 		catch (Exception e)

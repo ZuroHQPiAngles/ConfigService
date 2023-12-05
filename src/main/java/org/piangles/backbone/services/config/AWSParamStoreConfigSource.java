@@ -23,6 +23,7 @@ import org.piangles.backbone.services.Locator;
 import org.piangles.backbone.services.logging.LoggingService;
 import org.piangles.core.util.central.Environment;
 
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.ssm.SsmClient;
 import software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest;
 import software.amazon.awssdk.services.ssm.model.GetParametersByPathResponse;
@@ -40,7 +41,7 @@ class AWSParamStoreConfigSource implements ConfigSource
 		environment = new Environment(); 
 		try
 		{
-			ssmClient = SsmClient.builder().region(environment.getRegion()).build();
+			ssmClient = SsmClient.builder().region(Region.US_EAST_2).build();
 		}
 		catch (Exception e)
 		{

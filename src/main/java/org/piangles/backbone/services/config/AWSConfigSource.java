@@ -34,7 +34,7 @@ public class AWSConfigSource implements ConfigSource
 	public Configuration retrieveConfiguration(String componentId) throws ConfigException 
 	{
 		Configuration configuration;
-		if (StringUtils.startsWithIgnoreCase(componentId, "secret")) 
+		if (StringUtils.startsWithIgnoreCase(componentId, "secret_")) 
 		{
 			configuration = awsSecretManagerConfigSource.retrieveConfiguration(componentId);
 		}
