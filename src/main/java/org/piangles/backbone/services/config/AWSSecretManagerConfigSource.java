@@ -62,6 +62,7 @@ class AWSSecretManagerConfigSource implements ConfigSource
 		try
 		{
 			String pathPrefix = "/" + environment.identifyEnvironment() + "/" + componentId;
+			logger.info("ConfigService:Searching for pathPrefix : " + pathPrefix);
 
 			GetSecretValueRequest valueRequest = GetSecretValueRequest.builder()
 					.secretId(pathPrefix)
