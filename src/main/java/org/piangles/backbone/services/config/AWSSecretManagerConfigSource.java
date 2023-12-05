@@ -44,7 +44,6 @@ class AWSSecretManagerConfigSource implements ConfigSource
 			secretsManagerClient = SecretsManagerClient
 					.builder()
 					.region(environment.getRegion())
-					.credentialsProvider(ProfileCredentialsProvider.create())
 					.build();
 		}
 		catch (Exception e)
