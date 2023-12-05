@@ -18,6 +18,7 @@
  
 package org.piangles.backbone.services.config;
 
+import org.apache.commons.lang3.StringUtils;
 import org.piangles.backbone.services.Locator;
 import org.piangles.backbone.services.logging.LoggingService;
 import org.piangles.core.util.central.Environment;
@@ -33,7 +34,6 @@ class AWSSecretManagerConfigSource implements ConfigSource
 
 	private Environment environment = null;
 	private SecretsManagerClient secretsManagerClient = null;
-	private String secretName = "_encrypt-token";
 	
 	AWSSecretManagerConfigSource() throws Exception
 	{
@@ -61,17 +61,17 @@ class AWSSecretManagerConfigSource implements ConfigSource
 		
 		try
 		{
-			secretName = environment.identifyEnvironment() + secretName;
+			String pathPrefix = "/" + environment.identifyEnvironment() + "/" + componentId;
 
 			GetSecretValueRequest valueRequest = GetSecretValueRequest.builder()
-					.secretId(secretName)
+					.secretId(pathPrefix)
 					.build();
 
 			GetSecretValueResponse valueResponse = secretsManagerClient.getSecretValue(valueRequest);
 			String secret = valueResponse.secretString();
 
 			configuration = new Configuration();
-			configuration.addNameValue(secretName, secret);
+			configuration.addNameValue(StringUtils.substringAfterLast(pathPrefix, "/"), secret);
 		}
 		catch (Exception e)
 		{
