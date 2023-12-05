@@ -41,7 +41,7 @@ class AWSParamStoreConfigSource implements ConfigSource
 		environment = new Environment(); 
 		try
 		{
-			ssmClient = SsmClient.builder().region(Region.US_EAST_2).build();
+			ssmClient = SsmClient.builder().region(environment.getRegion()).build();
 		}
 		catch (Exception e)
 		{

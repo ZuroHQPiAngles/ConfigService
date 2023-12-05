@@ -44,7 +44,7 @@ class AWSSecretManagerConfigSource implements ConfigSource
 			
 			secretsManagerClient = SecretsManagerClient
 					.builder()
-					.region(Region.US_EAST_2)
+					.region(environment.getRegion())
 					.credentialsProvider(ProfileCredentialsProvider.create())
 					.build();
 		}
