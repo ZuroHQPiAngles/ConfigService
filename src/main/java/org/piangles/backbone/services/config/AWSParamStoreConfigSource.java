@@ -23,7 +23,6 @@ import org.piangles.backbone.services.Locator;
 import org.piangles.backbone.services.logging.LoggingService;
 import org.piangles.core.util.central.Environment;
 
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.ssm.SsmClient;
 import software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest;
 import software.amazon.awssdk.services.ssm.model.GetParametersByPathResponse;

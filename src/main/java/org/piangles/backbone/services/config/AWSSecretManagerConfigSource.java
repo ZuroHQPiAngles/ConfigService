@@ -22,7 +22,6 @@ import org.piangles.backbone.services.Locator;
 import org.piangles.backbone.services.logging.LoggingService;
 import org.piangles.core.util.central.Environment;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
