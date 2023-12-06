@@ -35,7 +35,7 @@ class AWSSecretManagerConfigSource implements ConfigSource
 	private Environment environment = null;
 	private SecretsManagerClient secretsManagerClient = null;
 	
-	AWSSecretManagerConfigSource() throws Exception
+	AWSSecretManagerConfigSource() throws ConfigException
 	{
 		environment = new Environment(); 
 		try
@@ -50,7 +50,7 @@ class AWSSecretManagerConfigSource implements ConfigSource
 		{
 			String message = "AWS SecretsManagerClient could not be created. Reason: " + e.getMessage();
 			logger.fatal(message, e);
-			throw new Exception(message);
+			throw new ConfigException(message, e);
 		}
 	}
 	
