@@ -38,7 +38,7 @@ public class ConfigServiceImpl
 		String configSourceValue = tier1Config.getProperty(CONFIG_SOURCE);
 		if (StringUtils.isBlank(configSourceValue) || "AWS".equals(configSourceValue))
 		{
-			configSource = new AWSParamStoreConfigSource(); //Default
+			configSource = new AWSConfigSource(); //Default
 		}
 		else if ("Database".equals(configSourceValue))
 		{
