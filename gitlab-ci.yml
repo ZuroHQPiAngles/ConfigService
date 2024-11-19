@@ -97,7 +97,7 @@ deploy:
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
     # pull the image on box
-    - ssh -i ~/.ssh/id_rsa.pem -T ec2-user@${DEV_BASTION_HOST} "ssh -i zurodev.pem ec2-user@${DEV_PLATFORM_HOST} 'bash -s' < deploy.sh \ moneytransferservice dev"
+    - ssh -i ~/.ssh/id_rsa.pem -T ec2-user@${DEV_BASTION_HOST} "ssh -i zurodev.pem ec2-user@${DEV_BACKBONE_HOST} 'bash -s' < deploy.sh \ configservice dev"
   services:
     - name: docker.platform.avalara.io/sre/gitlab-templates/docker-dind:latest
       alias: docker
