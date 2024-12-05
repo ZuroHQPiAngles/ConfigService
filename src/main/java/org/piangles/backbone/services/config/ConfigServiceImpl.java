@@ -72,13 +72,19 @@ public class ConfigServiceImpl
 		if (configuration == null) {
 			throw new ConfigException("Unable to find configuration for componentId : " + componentId);
 		}
-		//add properties from tier1Config
-		if(tier1Config != null) {
-			logger.info("ConfigServiceImpl: adding tier1Config properties with size : " + tier1Config.size());
-			for (Object key : tier1Config.keySet()) {
-				configuration.addNameValue(key.toString(), tier1Config.getProperty(key.toString()));
+		//add secrets to configuration
+        try {
+			Properties secretProperties = CentralClient.getInstance().secrets();
+			if(secretProperties != null) {
+				logger.info("ConfigServiceImpl: adding secret properties with size : " + secretProperties.size());
+				for (Object key : secretProperties.keySet()) {
+					configuration.addNameValue(key.toString(), secretProperties.getProperty(key.toString()));
+				}
 			}
-		}
+        } catch (Exception e) {
+			logger.error("ConfigServiceImpl: Unable to retrieve secrets : " + e.getMessage());
+        }
+
 		return configuration;
 	}
 }
