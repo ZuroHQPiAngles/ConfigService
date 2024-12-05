@@ -45,7 +45,7 @@
 		<dependency>
 			<groupId>org.piangles.backbone.services</groupId>
 			<artifactId>BackboneServicesLocator</artifactId>
-			<version>20.1</version>
+			<version>1.0-secrets_rds-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
