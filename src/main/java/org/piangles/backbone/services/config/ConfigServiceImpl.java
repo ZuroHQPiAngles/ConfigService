@@ -24,12 +24,15 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.piangles.core.services.AuditDetails;
 import org.piangles.core.util.central.CentralClient;
+import org.piangles.backbone.services.Locator;
+import org.piangles.backbone.services.logging.LoggingService;
 
 public class ConfigServiceImpl
 {
 	private static final String CONFIG_SOURCE = "ConfigSource";
 	
 	private ConfigSource configSource = null;
+	private LoggingService logger = Locator.getInstance().getLoggingService();
 
 	public ConfigServiceImpl() throws Exception
 	{
