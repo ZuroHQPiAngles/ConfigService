@@ -57,18 +57,28 @@ public class ConfigServiceImpl
 	public Configuration getConfiguration(AuditDetails details, String componentId) throws ConfigException
 	{
 		Configuration configuration = null;
-		
+
 		/**
 		 * TODO We should record audit for configuration.
 		 * configDAO.recordAudit(context);
-		 * 
+		 *
 		 */
 		configuration = configSource.retrieveConfiguration(componentId);
-
-		if (configuration == null)
-		{
+		if (configuration == null) {
 			throw new ConfigException("Unable to find configuration for componentId : " + componentId);
 		}
+		//add secrets to configuration
+        try {
+			Properties secretProperties = CentralClient.getInstance().secrets();
+			if(secretProperties != null) {
+				logger.info("ConfigServiceImpl: adding secret properties with size : " + secretProperties.size());
+				for (Object key : secretProperties.keySet()) {
+					configuration.addNameValue(key.toString(), secretProperties.getProperty(key.toString()));
+				}
+			}
+        } catch (Exception e) {
+			logger.error("ConfigServiceImpl: Unable to retrieve secrets : " + e.getMessage());
+        }
 
 		return configuration;
 	}
