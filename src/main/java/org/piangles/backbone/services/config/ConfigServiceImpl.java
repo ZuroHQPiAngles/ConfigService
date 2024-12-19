@@ -24,12 +24,15 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.piangles.core.services.AuditDetails;
 import org.piangles.core.util.central.CentralClient;
+import org.piangles.backbone.services.Locator;
+import org.piangles.backbone.services.logging.LoggingService;
 
 public class ConfigServiceImpl
 {
 	private static final String CONFIG_SOURCE = "ConfigSource";
 	
 	private ConfigSource configSource = null;
+	private LoggingService logger = Locator.getInstance().getLoggingService();
 
 	public ConfigServiceImpl() throws Exception
 	{
@@ -57,18 +60,28 @@ public class ConfigServiceImpl
 	public Configuration getConfiguration(AuditDetails details, String componentId) throws ConfigException
 	{
 		Configuration configuration = null;
-		
+
 		/**
 		 * TODO We should record audit for configuration.
 		 * configDAO.recordAudit(context);
-		 * 
+		 *
 		 */
 		configuration = configSource.retrieveConfiguration(componentId);
-
-		if (configuration == null)
-		{
+		if (configuration == null) {
 			throw new ConfigException("Unable to find configuration for componentId : " + componentId);
 		}
+		//add secrets to configuration
+        try {
+			Properties secretProperties = CentralClient.getInstance().getSecrets();
+			if(secretProperties != null) {
+				logger.info("ConfigServiceImpl: adding secret properties.");
+				for (Object key : secretProperties.keySet()) {
+					configuration.addNameValue(key.toString(), secretProperties.getProperty(key.toString()));
+				}
+			}
+        } catch (Exception e) {
+			logger.error("ConfigServiceImpl: Unable to retrieve secrets : " + e.getMessage());
+        }
 
 		return configuration;
 	}
