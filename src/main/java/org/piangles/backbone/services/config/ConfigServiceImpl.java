@@ -74,7 +74,7 @@ public class ConfigServiceImpl
         try {
 			Properties secretProperties = CentralClient.getInstance().getSecrets();
 			if(secretProperties != null) {
-				logger.info("ConfigServiceImpl: adding secret properties with size : " + secretProperties.size());
+				logger.info("ConfigServiceImpl: adding secret properties.");
 				for (Object key : secretProperties.keySet()) {
 					configuration.addNameValue(key.toString(), secretProperties.getProperty(key.toString()));
 				}
