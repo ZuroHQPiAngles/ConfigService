@@ -68,7 +68,8 @@ public class ConfigServiceImpl
 		 */
 		configuration = configSource.retrieveConfiguration(componentId);
 		if (configuration == null) {
-			throw new ConfigException("Unable to find configuration for componentId : " + componentId);
+			logger.debug("ConfigServiceImpl: No configuration found, so fetching secrets for componentId: " + componentId);
+			configuration = new Configuration();
 		}
 		//add secrets to configuration
         try {
